@@ -1,0 +1,16 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "price": 1.23,
+      "name": "LV Hat",
+      "description": "A very cool hat that will keep you cool in the sun"
+    },
+    {
+      "id": "2",
+      "price": 7.86,
+      "name": "Rolex Datejust",
+      "description": "Two Tone Datejust. A great piece to a casual wardrobe"
+    }
+  ]
+}
