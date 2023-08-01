@@ -46,8 +46,9 @@ export default function Page({ params }: Params) {
     });
   }, []);
 
-  // return <h1>Testing Checkout ID</h1>;
-  return <div id="dropin-container"></div>;
+  return (
+    <div id="dropin-container" style={{ width: 500, color: "black" }}></div>
+  );
 }
 
 export const getStaticPaths: GetStaticPaths = () => {

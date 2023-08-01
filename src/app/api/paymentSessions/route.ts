@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
     .sessions({
       amount: { currency: "USD", value: price },
       reference: "SalespromptTest1",
-      returnUrl: "https://your-company.com/checkout?shopperOrder=12xy..", // TODO: Fix this
+      returnUrl: "http://localhost:3000/confirmation",
       merchantAccount: "SalespromptECOM",
     })
     .then(async (response) => {

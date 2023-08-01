@@ -1,6 +1,5 @@
 "use client";
 import { GetStaticPaths } from "next";
-import Image from "next/image";
 
 import { Card, Space, Typography, Button } from "antd";
 
@@ -30,10 +29,6 @@ const Products: React.FunctionComponent = async () => {
       .then(async (response) => {
         console.log("Successfully created Adyen Payment Session");
 
-        // response
-        //   .json()
-        //   .then((data) => router.push(`/checkout/${data.response.id}`));
-
         let data = await response.json();
         router.push(`/checkout/${data.response.id}`);
       })
@@ -44,29 +39,34 @@ const Products: React.FunctionComponent = async () => {
   }
 
   return (
-    <Space>
-      {PRODUCTS.map((product) => {
-        return (
-          <Card
-            title={product.name}
-            key={product.id}
-            cover={<img alt="test" src={product.imageUrl} />}
-            style={{ width: 200 }}
-          >
-            <Typography>{product.description}</Typography>
-            <Typography.Text strong>${product.price}</Typography.Text>
-            <br></br>
-            <Button
-              value={product.id}
-              type="primary"
-              onClick={() => createAdyenSession(product)}
+    <>
+      <Typography.Title style={{ color: "white" }}>
+        My Watch Store
+      </Typography.Title>
+      <Space>
+        {PRODUCTS.map((product) => {
+          return (
+            <Card
+              title={product.name}
+              key={product.id}
+              cover={<img alt="test" src={product.imageUrl} />}
+              style={{ width: 200 }}
             >
-              Checkout!
-            </Button>
-          </Card>
-        );
-      })}
-    </Space>
+              <Typography>{product.description}</Typography>
+              <Typography.Text strong>${product.price}</Typography.Text>
+              <br></br>
+              <Button
+                value={product.id}
+                type="primary"
+                onClick={() => createAdyenSession(product)}
+              >
+                Checkout!
+              </Button>
+            </Card>
+          );
+        })}
+      </Space>
+    </>
   );
 };
 
