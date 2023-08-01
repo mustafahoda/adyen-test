@@ -1,26 +1,41 @@
 "use client";
-import { GetStaticPaths, GetStaticProps } from "next";
+import { GetStaticPaths } from "next";
+import Image from "next/image";
 
 import { Card, Space, Typography, Button } from "antd";
 
 import data from "../../../public/data.json";
+import { useRouter } from "next/navigation";
 
 type Product = {
   id: string;
   price: number;
   name: string;
   description: string;
+  imageUrl: string;
 };
 
 const Products: React.FunctionComponent = async () => {
+  const router = useRouter();
   const PRODUCTS = data.products;
 
   function createAdyenSession(product: Product) {
-    fetch(`http://localhost:3000/api/paymentSessions?productId=1`, {
+    fetch(`http://localhost:3000/api/paymentSessions`, {
       method: "POST",
+      body: JSON.stringify({ price: product.price }),
+      headers: {
+        "Content-Type": "application/json",
+      },
     })
-      .then((response) => {
+      .then(async (response) => {
         console.log("Successfully created Adyen Payment Session");
+
+        // response
+        //   .json()
+        //   .then((data) => router.push(`/checkout/${data.response.id}`));
+
+        let data = await response.json();
+        router.push(`/checkout/${data.response.id}`);
       })
       .catch((error) => {
         console.log("An error occurred when creating Adyen Payment Session");
@@ -32,8 +47,15 @@ const Products: React.FunctionComponent = async () => {
     <Space>
       {PRODUCTS.map((product) => {
         return (
-          <Card title={product.name} key={product.id}>
+          <Card
+            title={product.name}
+            key={product.id}
+            cover={<img alt="test" src={product.imageUrl} />}
+            style={{ width: 200 }}
+          >
             <Typography>{product.description}</Typography>
+            <Typography.Text strong>${product.price}</Typography.Text>
+            <br></br>
             <Button
               value={product.id}
               type="primary"
@@ -54,20 +76,5 @@ export const getStaticPaths: GetStaticPaths = () => {
     fallback: false,
   };
 };
-
-// Fetching data from the JSON file
-// import fsPromises from "fs/promises";
-// import path from "path";
-// export const getStaticProps: GetStaticProps = async (ctx) => {
-//   const filePath = path.join("public/products.json");
-//   const jsonData = await fsPromises.readFile(filePath);
-
-//   console.log(jsonData);
-//   //   const objectData = JSON.parse(jsonData);
-
-//   return {
-//     props: { products },
-//   };
-// };
 
 export default Products;

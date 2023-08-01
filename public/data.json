@@ -3,14 +3,16 @@
     {
       "id": "1",
       "price": 1.23,
-      "name": "LV Hat",
-      "description": "A very cool hat that will keep you cool in the sun"
+      "name": "Rolex Yachtmaster",
+      "description": "Staple piece to wear on your next yacht party",
+      "imageUrl": "https://www.bobswatches.com/images/Rolex-Yacht-Master-116655-SKU157347.jpg"
     },
     {
       "id": "2",
       "price": 7.86,
-      "name": "Rolex Datejust",
-      "description": "Two Tone Datejust. A great piece to a casual wardrobe"
+      "name": "Omega Speedmaster",
+      "description": "Wear the same watch worn on the moon",
+      "imageUrl": "https://www.bobswatches.com/omega/images/Used-Omega-Speedmaster-310.30.42.50.01.002-SKU158562.jpg"
     }
   ]
 }

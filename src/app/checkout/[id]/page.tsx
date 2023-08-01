@@ -6,15 +6,6 @@ import { adyenConfig } from "@/../public/adyenConfig";
 import "@adyen/adyen-web/dist/adyen.css";
 import AdyenCheckout from "@adyen/adyen-web";
 
-type Props = {
-  product: Array<{
-    id: string;
-    price: number;
-    name: string;
-    description: string;
-  }>;
-};
-
 type Params = {
   params: {
     id: string;

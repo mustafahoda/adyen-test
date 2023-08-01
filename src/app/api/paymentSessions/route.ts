@@ -18,12 +18,28 @@ type Params = {
 };
 
 export async function POST(request: NextRequest) {
-  console.log("Incoming request");
-  const { searchParams } = new URL(request.url);
+  console.log("Incoming request to create Adyen Payment Session");
+  const body = await request.json();
+
+  console.log(body);
+
+  if (typeof body.price !== "number") {
+    return NextResponse.json(
+      {
+        error: "Price provided is not of type number",
+        success: false,
+      },
+      { status: 500 }
+    );
+  }
+
+  const price = body.price * 100;
+
+  console.log(typeof price);
 
   return checkout
     .sessions({
-      amount: { currency: "USD", value: 1000 },
+      amount: { currency: "USD", value: price },
       reference: "SalespromptTest1",
       returnUrl: "https://your-company.com/checkout?shopperOrder=12xy..", // TODO: Fix this
       merchantAccount: "SalespromptECOM",
@@ -41,7 +57,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ response: response, success: true });
     })
     .catch((e) => {
-      //   console.log("An error occurred");
+      console.log(e);
       return NextResponse.json({ error: e, success: false });
     });
 }
