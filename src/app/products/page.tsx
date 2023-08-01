@@ -1,26 +1,47 @@
+"use client";
 import { GetStaticPaths, GetStaticProps } from "next";
-// Fetching data from the JSON file
-import Link from "next/link";
 
 import { Card, Space, Typography, Button } from "antd";
 
 import data from "../../../public/data.json";
 
+type Product = {
+  id: string;
+  price: number;
+  name: string;
+  description: string;
+};
+
 const Products: React.FunctionComponent = async () => {
   const PRODUCTS = data.products;
+
+  function createAdyenSession(product: Product) {
+    fetch(`http://localhost:3000/api/paymentSessions?productId=1`, {
+      method: "POST",
+    })
+      .then((response) => {
+        console.log("Successfully created Adyen Payment Session");
+      })
+      .catch((error) => {
+        console.log("An error occurred when creating Adyen Payment Session");
+      })
+      .finally(() => console.log("okay done"));
+  }
 
   return (
     <Space>
       {PRODUCTS.map((product) => {
         return (
-          <>
-            <Card title={product.name}>
-              <Typography>{product.description}</Typography>
-              <Link href={`/checkout/${product.id}`}>
-                <Button type="primary">Checkout!</Button>
-              </Link>
-            </Card>
-          </>
+          <Card title={product.name} key={product.id}>
+            <Typography>{product.description}</Typography>
+            <Button
+              value={product.id}
+              type="primary"
+              onClick={() => createAdyenSession(product)}
+            >
+              Checkout!
+            </Button>
+          </Card>
         );
       })}
     </Space>
